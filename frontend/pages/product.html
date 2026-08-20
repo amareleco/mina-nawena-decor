@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Gestão de Produtos</title>
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <a href="#" class="brand-container">
+                <div class="logo-box">
+                    <img src="../assets/asset-3-logo.png" alt="Mina Decor Logo" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/diamond.png';">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            
+            <div class="user-nav">
+                <ul class="nav-links">
+                     <li><a href="dashboard.html">Painel Principal</a></li>
+                    <li><a href="product.html"class= "active">Produtos</a></li>
+                    <li><a href="category.html">Categorias</a></li>
+                    <!-- <li><a href="supplier.html">Fornecedores</a></li>
+                    <li><a href="event.html">Eventos</a></li>
+                      <li><a href="event_item.html">Itens do Evento</a></li> -->
+                       <li><a href="movement.html">Movimento</a></li>
+                    <li><a href="user.html">Gestores</a></li>
+                    <!-- <li><a href="client.html">Clientes</a></li> -->
+                    <li><a href="repport.html">Relatórios</a></li>
+                </ul>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENT -->
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Gestão de Produtos</h1>
+                <p>Cadastre, visualize, edite e gira o catálogo de artigos decorativos.</p>
+            </div>
+            <button class="btn-gold" id = "openCreateProductBtn">
+                + Novo Produto
+            </button>
+        </div>
+
+        <!-- FILTRO -->
+        <div class="filter-bar">
+            <input type="text" id="productSearch" class="search-input product-row form-control" placeholder="Pesquisar por código, nome ou categoria...">
+        </div>
+
+        <!-- TABELA -->
+        <div class="panel-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Descrição</th>
+                        <th>Quantidade</th>
+                        <th>Estoque Min.</th>
+                        <th>Estado</th>
+                        <th>Data</th>
+                        <th style="text-align: center;">Ações</th>
+                    </tr>
+                     </thead>
+                    <tbody id="products-table-body">
+                        <tr>
+                        <td>P001</td>
+                        <td>Produto 1</td>
+                        <td>Vasos</td>
+                        <td>Vaso decorativo de cerâmica.</td>
+                        <td>10 / 5</td>
+                        <td>R$ 50,00</td>
+                        <td>Ativo</td>
+                        <td>2026-08-07</td>
+                        <td class="actions text-center" >             
+                        <button class="btn-action edit edit-product-btn" data-code="${product.code}"
+                            title="Editar Produto" title="Editar"><i class="fas fa-pen" ></i></button>
+                        <button class="btn-action delete delete-product-btn"
+                        data-code="${product.code}"
+                        title="Apagar Produto" title="Apagar Produto"><i class="fas fa-trash-alt">
+                        </i></button> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL DE CADASTRO / EDIÇÃO (CRUD) -->
+    <div class="modal-overlay" id="createProductModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-form-title" class = "productModalTitle" >Cadastrar Produto</h2>
+                <button class="close-btn" id="closeCreateProductBtn">&times;</button>
+            </div>
+            <form id="createProductForm">
+                <div class="modal-body">
+                    <input type="hidden" id="prod-index">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="product-Code">Código do Produto *</label>
+                            <input type="text" id="productCode" class="form-control" placeholder=" PROD-001" readonly>
+                        </div>
+                        <div class="form-group">
+                          <label for="productCategory">
+                               Categoria *
+                                      </label>
+
+                          <select
+                              id="productCategory"
+                                 class="form-control"
+                                 name = "category_id"
+                                  required
+                                  >
+                           <option value= "">  
+                           Selecione uma categoria...
+                         </option>
+                        </select>
+
+
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="prod-name">Nome do Produto *</label>
+                            <input type="text" id="productName" name ="name" class="form-control" placeholder="Ex: Vaso Dourado Imperial" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="prod-description">Descrição</label>
+                            <textarea id="productDescription" class="form-control" name = "description" rows="3" placeholder="Detalhes e acabamento do item..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-quantity">Quantidade em Estoque *</label>
+                            <input type="number" id="productQuantity" name ="quantity" class="form-control" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-min-stock">Estoque Mínimo *</label>
+                            <input type="number" id="productMinimumStock" name= "minimum_stock" class="form-control" min="0" required>
+                        </div>
+        
+                        <div class="form-group">
+                            <label>Estado do Produto</label>
+                            <select id="productState" name="is_active">
+                               <option value="true">Disponível</option>
+                                <option value="false">Indisponível</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelCreateProductBtn">Cancelar</button>
+                    <button type="submit" class="btn-gold" id="addProductBtn">Salvar Produto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO (READ) -->
+    <div class="modal-overlay" id="view-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Detalhes do Produto</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="view-modal-content">
+                <!-- Conteúdo preenchido dinamicamente por JS -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary">Fechar</button>
+            </div>
+        </div>
+    </div>
+    
+<!--Footer-->
+<footer class="app-footer">
+    <div>
+        <strong>Mina  Nawena Decor</strong>
+        <span>| Plataforma de Gestão Interna</span>
+    </div>
+
+    <div>
+        Desenvolvido por <strong>Albino Mareleco</strong>
+    </div>
+
+    <div>
+        © 2026 — Todos os direitos reservados
+    </div>
+</footer>
+
+
+    <script src="../cores/auth.js"></script>
+<script>
+    requireAuth();
+</script>
+ <script src="../cores/config.js"></script>
+    <script src="../js/product.js"></script>
+    </body>
+    </html>

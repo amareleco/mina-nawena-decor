@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Itens do Evento</title>
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <a href="dashboard.html" class="brand-container">
+                <div class="logo-box">
+                    <img src="../assets/asset-3-logo.png" alt="Mina Decor Logo" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/diamond.png';">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            
+            <div class="user-nav">
+                 <ul class="nav-links">
+                   <li><a href="dashboard.html">Painel Principal</a></li>
+                    <li><a href="product.html">Produtos</a></li>
+                    <li><a href="category.html">Categorias</a></li>
+                    <li><a href="supplier.html">Fornecedores</a></li>
+                    <li><a href="event.html">Eventos</a></li>
+                      <li><a href="event_item.html" class="active">Itens do Evento</a></li>
+                       <li><a href="movement.html">Movimento</a></li>
+                    <li><a href="user.html">Gestores</a></li>
+                    <li><a href="client.html">Clientes</a></li>
+                    <li><a href="repport.html">Relatórios</a></li>
+                </ul>
+                <button class="btn-logout">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENT -->
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Gestão de Itens do Evento</h1>
+                <p>Associe produtos e controle as quantidades alocadas a cada evento.</p>
+            </div>
+            <button class="btn-gold" id="openCreateEventItemBtn">
+                + Novo Item
+            </button>
+        </div>
+
+        <!-- FILTRO -->
+        <div class="filter-bar">
+            <input type="text" id="search-input" class="search-input" placeholder="Pesquisar por código, código do evento ou produto...">
+        </div>
+
+        <!-- TABELA -->
+        <div class="panel-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Cód. Evento (event_code)</th>
+                        <th>Cód. Produto (product_code)</th>
+                        <th>Quantidade (quantity)</th>
+                        <th style="text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="event-items-table-body">
+                    <tr>
+                        <td><span class="badge-code">EVI-001</span></td>
+                        <td><span class="badge-code">EVT-001</span></td>
+                        <td>PROD-001</td>
+                        <td><strong>12</strong></td>
+                        <td class="actions text-center">     
+                            <button class="btn-action edit editEventItemButtons" title="Editar Item"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete" title="Apagar Item"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-code">EVI-002</span></td>
+                        <td><span class="badge-code">EVT-001</span></td>
+                        <td>PROD-004</td>
+                        <td><strong>4</strong></td>
+                        <td class="actions text-center">     
+                            <button class="btn-action edit editEventItemButtons" title="Editar Item"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete" title="Apagar Item"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL DE CADASTRO / EDIÇÃO -->
+    <div class="modal-overlay" id="createEventItemModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-form-title" class="item-modal-title">Adicionar Item ao Evento</h2>
+                <button class="close-btn" id="closeCreateEventItemBtn">&times;</button>
+            </div>
+            <form id="createEventItemForm">
+                <div class="modal-body">
+                    <input type="hidden" id="item-id">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="item-code">Código do Registo*</label>
+                            <input type="text" id="item-code" class="form-control" placeholder="Ex: EVI-001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-code">Código do Evento *</label>
+                            <input type="text" id="event-code" class="form-control" placeholder="Ex: EVT-001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-code">Código do Produto *</label>
+                            <input type="text" id="product-code" class="form-control" placeholder="Ex: PROD-001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-quantity">Quantidade *</label>
+                            <input type="number" id="item-quantity" class="form-control" min="1" placeholder="Ex: 10" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelCreateEventItemBtn">Cancelar</button>
+                    <button type="submit" class="btn-gold">Salvar Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+,
+    <script src="../js/event_item.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Gestão de Eventos</title>
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <a href="dashboard.html" class="brand-container">
+                <div class="logo-box">
+                    <img src="../assets/asset-3-logo.png" alt="Mina Decor Logo" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/diamond.png';">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            
+            <div class="user-nav">
+                 <ul class="nav-links">
+                   <li><a href="dashboard.html">Painel Principal</a></li>
+                    <li><a href="product.html">Produtos</a></li>
+                    <li><a href="category.html">Categorias</a></li>
+                    <li><a href="supplier.html">Fornecedores</a></li>
+                    <li><a href="event.html" class="active">Eventos</a></li>
+                      <li><a href="event_item.html">Itens do Evento</a></li>
+                       <li><a href="movement.html">Movimento</a></li>
+                    <li><a href="user.html">Gestores</a></li>
+                    <li><a href="client.html">Clientes</a></li>
+                    <li><a href="repport.html">Relatórios</a></li>
+                </ul>
+                <button class="btn-logout">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENT -->
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Gestão de Eventos</h1>
+                <p>Cadastre, edite e gira o cronograma de eventos e decorações contratadas.</p>
+            </div>
+            <button class="btn-gold" id="openCreateEventBtn">
+                + Novo Evento
+            </button>
+        </div>
+
+        <!-- FILTRO -->
+        <div class="filter-bar">
+            <input type="text" id="search-input" class="search-input" placeholder="Pesquisar por código, nome, tipo ou local...">
+        </div>
+
+        <!-- TABELA -->
+        <div class="panel-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome do Evento</th>
+                        <th>Tipo</th>
+                        <th>Data do Evento</th>
+                        <th>Local</th>
+                        <th>Cliente ID</th>
+                        <th>Estado</th>
+                        <th>Data de Criação</th>
+                        <th style="text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="events-table-body">
+                    <tr>
+                        <td><span class="badge-code">EVT-001</span></td>
+                        <td><strong>Casamento Real Gold</strong></td>
+                        <td>Casamento</td>
+                        <td>2026-08-15</td>
+                        <td>Hotel Polana, Maputo</td>
+                        <td>#102</td>
+                        <td><span class="badge-status active">Confirmado</span></td>
+                        <td>2026-08-07</td>
+                        <td class="actions text-center">     
+                            <!-- Botão Visualizar omitido conforme solicitado -->
+                            <button class="btn-action edit editEventButtons" title="Editar Evento"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete" title="Apagar Evento"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-code">EVT-002</span></td>
+                        <td><strong>Gala Corporativa 2026</strong></td>
+                        <td>Corporativo</td>
+                        <td>2026-09-01</td>
+                        <td>Centro de Conferências</td>
+                        <td>#205</td>
+                        <td><span class="badge-status pending">Pendente</span></td>
+                        <td>2026-08-07</td>
+                        <td class="actions text-center">     
+                            <!-- Botão Visualizar omitido conforme solicitado -->
+                            <button class="btn-action edit editEventButtons" title="Editar Evento"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete" title="Apagar Evento"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL DE CADASTRO / EDIÇÃO -->
+    <div class="modal-overlay" id="createEventModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-form-title" class="event-modal-title">Cadastrar Evento</h2>
+                <button class="close-btn" id="closeCreateEventBtn">&times;</button>
+            </div>
+            <form id="createEventForm">
+                <div class="modal-body">
+                    <input type="hidden" id="event-id">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="event-code">Código do Evento *</label>
+                            <input type="text" id="event-code" class="form-control" placeholder="Ex: EVT-001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-client-id">ID do Cliente (client_id) *</label>
+                            <input type="number" id="event-client-id" class="form-control" placeholder="Ex: 102" min="1" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="event-name">Nome do Evento *</label>
+                            <input type="text" id="event-name" class="form-control" placeholder="Ex: Casamento Silva & Santos" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-type">Tipo de Evento *</label>
+                            <select id="event-type" class="form-control" required>
+                                <option value="">Selecione o tipo...</option>
+                                <option value="Casamento">Casamento</option>
+                                <option value="Aniversário">Aniversário</option>
+                                <option value="Corporativo">Corporativo</option>
+                                <option value="Gala">Gala</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-date">Data do Evento (event_date) *</label>
+                            <input type="date" id="event-date" class="form-control" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="event-location">Localização / Endereço *</label>
+                            <input type="text" id="event-location" class="form-control" placeholder="Ex: Salão Nobre, Av. Principal" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-status">Estado (status) *</label>
+                            <select id="event-status" class="form-control" required>
+                                <option value="Pendente">Pendente</option>
+                                <option value="Confirmado">Confirmado</option>
+                                <option value="Em Andamento">Em Andamento</option>
+                                <option value="Concluído">Concluído</option>
+                                <option value="Cancelado">Cancelado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-created-at" class = "data-created-title">Data de Criação</label>
+                            <input type="date" id="event-created-at" class="form-control" value="2026-08-07" readonly>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="event-description">Descrição</label>
+                            <textarea id="event-description" class="form-control" rows="3" placeholder="Detalhes da decoração, tema e observações..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelCreateEventBtn">Cancelar</button>
+                    <button type="submit" class="btn-gold">Salvar Evento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script src="../js/event.js"></script>
+
+</body>
+</html>

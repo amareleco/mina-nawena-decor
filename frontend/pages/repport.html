@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mina Decor - Emissão de Relatórios</title>
+
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <!-- Biblioteca para exportação PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        /* ==========================================================
+           ESTRUTURA GERAL DO RELATÓRIO
+        ========================================================== */
+
+        .report-container {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-top: 1rem;
+        }
+
+        .report-divider {
+            border: 0;
+            height: 1px;
+            background-color: #cbd5e1;
+            margin: 1.5rem 0;
+        }
+
+
+        /* ==========================================================
+           HEADER DO RELATÓRIO
+        ========================================================== */
+
+        .report-header-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--azul-cobalto, #1e3a8a);
+            border-radius: 6px;
+            padding: 1.25rem;
+        }
+
+        .report-header-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .report-label {
+            font-size: 0.725rem;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .report-header-grid h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--azul-cobalto, #1e3a8a);
+            font-weight: 700;
+        }
+
+        .report-header-grid h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--dourado-escuro, #d97706);
+            font-weight: 600;
+        }
+
+        .report-header-grid p {
+            margin: 0;
+            font-size: 0.925rem;
+            color: #334155;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+
+        /* ==========================================================
+           TABELAS
+        ========================================================== */
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .data-table th {
+            background-color: #f1f5f9;
+            color: #475569;
+            text-align: left;
+            padding: 0.75rem 0.85rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        .data-table td {
+            padding: 0.75rem 0.85rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1e293b;
+            vertical-align: middle;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+
+        /* ==========================================================
+           BADGES
+        ========================================================== */
+
+        .badge-code {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+        }
+
+        .badge-status {
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .badge-status.active {
+            background-color: #001f44;
+            color: #cbd5e1;
+        }
+
+        .badge-status.inactive {
+            background-color: #fee2e2;
+            color: #B8860B;
+        }
+
+
+        /* ==========================================================
+           MOVIMENTOS
+        ========================================================== */
+
+        .badge-status.movement-in {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .badge-status.movement-out {
+            background-color: #fef3c7;
+            color: #b45309;
+        }
+
+
+        /* ==========================================================
+           ESTADO VAZIO / CARREGAMENTO
+        ========================================================== */
+
+        .report-loading,
+        .report-empty,
+        .report-error {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+        }
+
+        .report-error {
+            color: #b91c1c;
+        }
+
+
+        /* ==========================================================
+           IMPRESSÃO
+        ========================================================== */
+
+        @media print {
+
+            .no-print,
+            header,
+            .page-header,
+            .filter-bar,
+            .btn-logout {
+                display: none !important;
+            }
+
+            body,
+            main {
+                background-color: #ffffff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .report-container {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+
+            .report-header-card {
+                border: 1px solid #ccc !important;
+                background-color: #fdfdfd !important;
+
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .data-table th {
+                background-color: #f1f5f9 !important;
+
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ==========================================================
+         NAVBAR
+    ========================================================== -->
+
+    <header>
+        <nav>
+
+            <a href="#" class="brand-container">
+
+                <div class="logo-box">
+                    <img
+                        src="../assets/asset-3-logo.png"
+                        alt="Mina Decor Logo"
+                        onerror="
+                            this.onerror=null;
+                            this.src='https://img.icons8.com/color/96/diamond.png';
+                        "
+                    >
+                </div>
+
+                <div class="brand-name">
+                    Mina Nawena <span>Decor</span>
+                </div>
+
+            </a>
+
+
+            <div class="user-nav">
+
+                <ul class="nav-links">
+
+                    <li>
+                        <a href="dashboard.html">
+                            Painel Principal
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="product.html">
+                            Produtos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="category.html">
+                            Categorias
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="movement.html">
+                            Movimento
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="user.html">
+                            Gestores
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="repport.html" class="active">
+                            Relatórios
+                        </a>
+                    </li>
+
+                </ul>
+
+                <button class="btn-logout" onclick="logout()">
+                    Sair
+                </button>
+
+            </div>
+
+        </nav>
+    </header>
+
+
+    <!-- ==========================================================
+         CONTEÚDO
+    ========================================================== -->
+
+    <main>
+
+        <!-- Cabeçalho da página -->
+
+        <div class="page-header no-print">
+
+            <div>
+
+                <h1>
+                    Centro de Relatórios
+                </h1>
+
+                <p>
+                    Selecione, visualize e exporte os relatórios
+                    gerais de produtos e movimentos.
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <button
+                    class="btn-secondary"
+                    onclick="printReport()"
+                >
+                    <i class="fas fa-print"></i>
+                    Imprimir
+                </button>
+
+
+                <button
+                    class="btn-gold"
+                    onclick="exportPDF()"
+                >
+                    <i class="fas fa-file-pdf"></i>
+                    Exportar PDF
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ======================================================
+             SELEÇÃO DO RELATÓRIO
+        ======================================================= -->
+
+        <div class="filter-bar no-print">
+
+            <div
+                class="form-group"
+                style="margin-bottom: 0; flex: 1;"
+            >
+
+                <label
+                    for="report-selector"
+                    style="margin-bottom: 0.25rem;"
+                >
+                    <strong>
+                        Tipo de Relatório:
+                    </strong>
+                </label>
+
+
+                <select
+                    id="report-selector"
+                    class="form-control"
+                    onchange="switchReport(this.value)"
+                >
+
+                    <option value="products">
+                        Relatório Geral de Produtos (Estoque)
+                    </option>
+
+                    <option value="movements">
+                        Relatório de Movimentos de Estoque
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- ======================================================
+             ÁREA DO RELATÓRIO
+        ======================================================= -->
+
+        <div
+            class="panel-card report-container"
+            id="report-printable-area"
+        >
+
+
+            <!-- ==================================================
+                 HEADER PADRONIZADO DA API
+            =================================================== -->
+
+            <div class="report-header-card">
+
+                <div class="report-header-grid">
+
+
+                    <!-- Empresa -->
+
+                    <div>
+
+                        <span class="report-label">
+                            Empresa
+                        </span>
+
+                        <h2 id="header-company">
+                            Carregando...
+                        </h2>
+
+                    </div>
+
+
+                    <!-- Nome do relatório -->
+
+                    <div>
+
+                        <span class="report-label">
+                            Nome do Relatório
+                        </span>
+
+                        <h3 id="header-report-name">
+                            Carregando...
+                        </h3>
+
+                    </div>
+
+
+                    <!-- Data -->
+
+                    <div>
+
+                        <span class="report-label">
+                            Data de Geração
+                        </span>
+
+                        <p id="header-generated-at">
+                            Carregando...
+                        </p>
+
+                    </div>
+
+
+                    <!-- Total -->
+
+                    <div>
+
+                        <span class="report-label">
+                            Total de Registos
+                        </span>
+
+                        <p id="header-total-records">
+                            <strong>
+                                0
+                            </strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <hr class="report-divider">
+
+
+            <!-- ==================================================
+                 RELATÓRIO DE PRODUTOS
+            =================================================== -->
+
+            <div
+                id="view-report-products"
+                class="report-view-section"
+            >
+
+                <table class="data-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Código
+                            </th>
+
+                            <th>
+                                Nome
+                            </th>
+
+                            <th>
+                                Cod. Categoria
+                            </th>
+
+                            <th>
+                                Nome Categoria
+                            </th>
+
+
+                            <th>
+                                Quantidade
+                            </th>
+
+                            <th>
+                                Stock Mínimo
+                            </th>
+
+                            <th>
+                                Estado do Stock
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="products-report-body">
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="report-loading"
+                            >
+                                Carregando produtos...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- ==================================================
+                 RELATÓRIO DE MOVIMENTOS
+            =================================================== -->
+
+            <div
+                id="view-report-movements"
+                class="report-view-section"
+                style="display: none;"
+            >
+
+                <table class="data-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Código
+                            </th>
+
+                            <th>
+                                Cod. Produto
+                            </th>
+
+                            <th>
+                                Nome do Produto
+                            </th>
+
+                            <th>
+                                Tipo de Movimento
+                            </th>
+
+                            <th>
+                                Quantidade
+                            </th>
+
+                            <th>
+                                Motivo
+                            </th>
+
+                            <th>
+                                Data de Criação
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="movements-report-body">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="report-loading"
+                            >
+                                Carregando movimentos...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /*
+         * A lógica de comunicação com o backend
+         * será colocada no reports.js.
+         *
+         * Este HTML apenas fornece a estrutura
+         * e os IDs que o JavaScript irá manipular.
+         */
+
+
+        function switchReport(type) {
+
+            /*
+             * Esconde todos os relatórios
+             */
+
+            document
+                .querySelectorAll(".report-view-section")
+                .forEach(section => {
+
+                    section.style.display = "none";
+
+                });
+
+
+            /*
+             * Mostra o relatório selecionado
+             */
+
+            if (type === "products") {
+
+                document
+                    .getElementById("view-report-products")
+                    .style.display = "block";
+
+            }
+
+
+            if (type === "movements") {
+
+                document
+                    .getElementById("view-report-movements")
+                    .style.display = "block";
+
+            }
+
+
+            /*
+             * O reports.js será responsável por
+             * buscar os dados corretos da API.
+             */
+
+            if (
+                typeof loadReport === "function"
+            ) {
+
+                loadReport(type);
+
+            }
+
+        }
+
+
+        /*
+         * Imprimir relatório
+         */
+
+        function printReport() {
+
+            window.print();
+
+        }
+
+
+        /*
+         * Exportar relatório para PDF
+         */
+
+        function exportPDF() {
+
+            const element =
+                document.getElementById(
+                    "report-printable-area"
+                );
+
+
+            const reportType =
+                document.getElementById(
+                    "report-selector"
+                ).value;
+
+
+            const opt = {
+
+                margin: [
+                    10,
+                    10,
+                    10,
+                    10
+                ],
+
+                filename:
+                    `MinaDecor_Relatorio_${reportType}.pdf`,
+
+                image: {
+                    type: "jpeg",
+                    quality: 0.98
+                },
+
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true
+                },
+
+                jsPDF: {
+                    unit: "mm",
+                    format: "a4",
+                    orientation: "landscape"
+                }
+
+            };
+
+
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .save();
+
+        }
+
+    </script>
+
+
+<!--Footer-->
+<footer class="app-footer">
+    <div>
+        <strong>Mina  Nawena Decor</strong>
+        <span>| Plataforma de Gestão Interna</span>
+    </div>
+
+    <div>
+        Desenvolvido por <strong>Albino Mareleco</strong>
+    </div>
+
+    <div>
+        © 2026 — Todos os direitos reservados
+    </div>
+</footer>
+
+   <!-- JavaScript do relatório -->
+    <script src="../cores/auth.js"></script>
+<script>
+    requireAuth();
+</script>
+ <script src="../cores/config.js"></script>
+<script src="../js/report.js"></script>
+
+</body>
+</html>
