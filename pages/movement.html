@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Gestão de Movimentos de Estoque</title>
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <a href="#" class="brand-container">
+                <div class="logo-box">
+                    <img src="../assets/asset-3-logo.png" alt="Mina Decor Logo" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/diamond.png';">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            
+            <div class="user-nav">
+                <ul class="nav-links">
+                     <li><a href="dashboard.html">Painel Principal</a></li>
+                    <li><a href="product.html">Produtos</a></li>
+                    <li><a href="category.html">Categorias</a></li>
+                    <!-- <li><a href="supplier.html">Fornecedores</a></li>
+                    <li><a href="event.html">Eventos</a></li>
+                      <li><a href="event_item.html">Itens do Evento</a></li> -->
+                       <li><a href="movement.html"  class="active">Movimento</a></li>
+                    <li><a href="user.html">Gestores</a></li>
+                    <!-- <li><a href="client.html">Clientes</a></li> -->
+                    <li><a href="repport.html">Relatórios</a></li>
+                </ul>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- CONTENT -->
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Gestão de Movimentos de Estoque</h1>
+                <p>Registe, acompanhe e gira o histórico de entradas e saídas de artigos decorativos.</p>
+            </div>
+            <button class="btn-gold btn btn-primary"  type="button"
+            id="addMovementBtn"
+            >
+                + Novo Movimento
+            </button>
+        </div>
+
+        <!-- FILTRO -->
+        <div class="filter-bar">
+            <input type="text" id="searchMovement" class="search-input" placeholder="Pesquisar por código, produto ou motivo...">
+        </div>
+
+        <!-- TABELA -->
+        <div class="panel-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Cód. Produto</th>
+                        <th>Nome do Produto</th>
+                        <th>Tipo</th>
+                        <th>Quantidade</th>
+                        <th>Motivo</th>
+                        <th>Data de Criação</th>
+                        <th>Última Atualização</th>
+                        <th style="text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="stock-movements-table-body">
+                    <tr>
+                        <td><span class="badge-code">MOV-001</span></td>
+                        <td>PROD-001</td>
+                        <td><strong>Vaso Dourado Imperial</strong></td>
+                        <td><span class="badge-status movement-in">ENTRADA</span></td>
+                        <td><strong>+15</strong></td>
+                        <td>Reposicao de Estoque</td>
+                        <td>2026-08-07</td>
+                        <td>2026-08-07</td>
+                        <td class="actions text-center">     
+                            <button class="btn-action edit editMovementButtons" title="Editar Movimento"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete" title="Apagar Movimento"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-code">MOV-002</span></td>
+                        <td>PROD-004</td>
+                        <td><strong>Lustre de Cristal Vintage</strong></td>
+                        <td><span class="badge-status movement-out">SAÍDA</span></td>
+                        <td><strong>-2</strong></td>
+                        <td>Aluguer para Evento #102</td>
+                        <td>2026-08-07</td>
+                        <td>2026-08-07</td>
+                        <td class="actions text-center">     
+                            <button class="btn-action edit edit-stock-movement-btn" title="Editar Movimento"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete delete-stock-movement-btn" title="apagar" type="button"
+                            data-code="${movement.code}">"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL DE CADASTRO / EDIÇÃO -->
+    <div class="modal-overlay" id="createMovementModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-form-title" class="movement-modal-title">Registar Movimento de Estoque</h2>
+                <button class="close-btn" id="closeCreateMovementBtn">&times;</button>
+            </div>
+            <form id="createMovementForm">
+                <div class="modal-body">
+                    <input type="hidden" id="movement-id">
+                    <div class="form-grid">
+                        <div class="form-group" id="movementCodeGroup">
+                            <label for="mov-code">Código do Movimento *</label>
+                            <input type="text" id="movementCode" class="form-control" placeholder=" MOV-001" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="movementProductCode">Código do Produto *</label>
+                            <input type="text" id="movementProductCode" class="form-control" placeholder="PROD-001" readonly>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="product-name">Nome do Produto *</label>
+                        <select
+                            id="movementProduct"
+                            name="product_id"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">
+                                Selecione um produto...
+                            </option>
+                        </select>                        
+                        </div>
+                        <div class="form-group">
+                            <label for="movement-type">Tipo de Movimento *</label>
+                            <select
+                            id="movementType"
+                            name="movement_type"
+                            class="form-control"
+                            required
+                        >
+                            <option value="">
+                                Selecione o tipo...
+                            </option>
+
+                            <option value="ENTRADA">
+                                Entrada
+                            </option>
+
+                            <option value="SAIDA">
+                                Saída
+                            </option>
+                            <option value="DEVOLUCAO">
+                                Devolucao
+                            </option>
+                             <option value="DANIFICADO">
+                                Danificado
+                            </option>
+                        </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="movement-quantity">Quantidade * </label>
+                            <input type="number" id="movementQuantity" class="form-control" min="1" placeholder="Ex: 10" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="movement-reason">Motivo *</label>
+                        <textarea
+                            id="movementReason"
+                            name="reason"
+                            placeholder="Motivo da movimentação..."
+                        ></textarea>                        
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelMovementBtn">
+                        Cancelar</button>
+                    <button type="submit" class="btn-gold btn btn-primary"
+                        id="saveMovementBtn">
+                        Salvar Movimento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!--Footer-->
+<footer class="app-footer">
+    <div>
+        <strong>Mina  Nawena Decor</strong>
+        <span>| Plataforma de Gestão Interna</span>
+    </div>
+
+    <div>
+        Desenvolvido por <strong>Albino Mareleco</strong>
+    </div>
+
+    <div>
+        © 2026 — Todos os direitos reservados
+    </div>
+</footer>
+
+<script src="../cores/auth.js"></script>
+<script>
+    requireAuth();
+</script>
+ <script src="../cores/config.js"></script>
+<script src="../js/movement.js"></script>
+
+</body>
+</html>

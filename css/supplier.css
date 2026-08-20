@@ -1,0 +1,52 @@
+/* Badges de Código e Status */
+.badge-code {
+    background-color: var(--azul-cobalto-light);
+    color: var(--azul-cobalto);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: bold;
+    border: 1px solid rgba(0, 45, 98, 0.2);
+}
+
+.badge-status {
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-status.active {
+    background-color: #E8F8F5;
+    color: #27AE60;
+    border: 1px solid #A3E4D7;
+}
+
+.badge-status.inactive {
+    background-color: #FDEDEC;
+    color: #E74C3C;
+    border: 1px solid #FADBD8;
+}
+
+/* Checkbox estilizado dentro do modal */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.checkbox-group label {
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}

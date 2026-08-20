@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Gestão e Decoração</title>
+
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+ <!-- CABEÇALHO / MENU -->
+    <header>
+        <nav>
+            <a href="#" class="brand-container">
+                <div class="logo-box">
+                    <img src = "../assets/asset-3-logo.png" alt="Logo Mina Decor" class="logo">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            <ul class="nav-links">
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL (IMAGEM/BANNER À ESQUERDA | FORMULÁRIO À DIREITA) -->
+    <main>
+        <div class="hero-container">
+            
+            <!-- Seção de Apresentação / Imagem -->
+            <section class="banner-section">
+                <span class="banner-tag">Vuhlawuleki & Vuxongi</span>
+                <h1 class="banner-title">WA  <span>AMUKERIWA</span></h1>
+                <p class="banner-desc">Sistema de Gestão Interna da Decor</p>
+                <div class="banner-illustration">
+                    <img src="../assets/asset-1.jpg" alt="Decoração elegante de evento">
+                </div>
+            </section>
+
+            <!-- Formulário de Login -->
+            <section class="login-section">
+                <div class="login-header">
+                    <h2>Área de Acesso</h2>
+                    <p>Insira as suas credenciais para entrar na plataforma.</p>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" class="form-control" placeholder="exemplo@minadecor.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Palavra-passe</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            Lembrar-me
+                        </label>
+                        <a href="#" class="forgot-password">Esqueceu a palavra-passe?</a>
+                    </div> -->
+
+                    <button type="submit" class="btn-submit btn-primary">
+                        Entrar no Sistema
+                    </button>
+                     <p id="login-error" class="error-message"></p>
+                </form>
+
+                <div class="login-footer">
+                </div>
+            </section>
+
+        </div>
+    </main>
+</body>
+<script src="../cores/config.js"></script>
+<script src="../js/login.js"></script>
+</html>

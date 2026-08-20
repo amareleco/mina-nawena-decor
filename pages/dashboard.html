@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+    <!-- NAVBAR EM AZUL COBALTO E AMARELO -->
+    <header>
+        <nav>
+            <a href="#" class="brand-container">
+                <div class="logo-box">
+                    <img src="../assets/asset-3-logo.png" alt="Mina Decor Logo" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/diamond.png';">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            
+            <div class="user-nav">
+                <ul class="nav-links">
+                     <li><a href="dashboard.html" class="active">Painel Principal</a></li>
+                    <li><a href="product.html">Produtos</a></li>
+                    <li><a href="category.html">Categorias</a></li>
+                    <!-- <li><a href="supplier.html">Fornecedores</a></li>
+                    <li><a href="event.html">Eventos</a></li>
+                      <li><a href="event_item.html">Itens do Evento</a></li> -->
+                       <li><a href="movement.html">Movimento</a></li>
+                    <li><a href="user.html">Gestores</a></li>
+                    <!-- <li><a href="client.html">Clientes</a></li> -->
+                    <li><a href="repport.html">Relatórios</a></li>
+                </ul>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- DASHBOARD CONTENT -->
+    <main>
+        <div class="dashboard-header">
+            <h1>Visão Geral do Sistema</h1>
+            <p>Acompanhe em tempo real as métricas, estoques e movimentacoes da Mina Nawena Decor.</p>
+        </div>
+
+        <!-- TOTALIZADORES ("totals") -->
+        <section class="totals-grid">
+            <div class="total-card">
+                <div class="card-title">Produtos</div>
+                <div class="card-value" id="total-products">0</div>
+            </div>
+            <div class="total-card yellow-accent">
+                <div class="card-title">Categorias</div>
+                <div class="card-value" id="total-categories">0</div>
+            </div>
+            <!--  <div class="total-card">
+                <div class="card-title">Clientes</div>
+                <div class="card-value" id="total-clients">0</div>
+            </div>
+            <div class="total-card yellow-accent">
+                <div class="card-title">Fornecedores</div>
+                <div class="card-value" id="total-suppliers">0</div>
+            </div>
+            <div class="total-card">
+                <div class="card-title">Eventos</div>
+                <div class="card-value" id="total-events">0</div> -->
+            </div>
+        </section>
+
+        <!-- SEÇÕES COM TABELAS -->
+        <div class="dashboard-sections">
+            
+            <!-- ESTOQUE BAIXO ("low_stock") -->
+            <div class="panel-card">
+                <div class="panel-header">
+                    <h3>Produtos com Estoque Baixo</h3>
+                    <!-- <span class="badge badge-danger" id="low-stock-count">0 Alertas</span> -->
+                </div>
+                <div class="panel-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome do Produto</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="low-stock">
+                            <tr><td colspan="3" class="empty-state">Carregando dados...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PRÓXIMOS EVENTOS ("recent_events") -->
+            <!-- <div class="panel-card">
+                <div class="panel-header">
+                    <h3>Eventos</h3>
+                    <span class="badge badge-yellow">Agendamentos</span>
+                </div>
+                <div class="panel-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Cód. Evento</th>
+                                <th>Cód. Cliente</th>
+                                <th>Cliente</th>
+                                <th>Data do Evento</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-events-table">
+                            <tr><td colspan="3" class="empty-state">Carregando dados...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
+
+            <!-- ÚLTIMAS MOVIMENTAÇÕES ("recent_movements") -->
+            <div class="panel-card" style="grid-column: 1 / -1;">
+                <div class="panel-header card-header">
+                    <h3>Movimentações</h3>
+                    <span class="badge badge-yellow">Histórico</span>
+                </div>
+                <div class="panel-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Produto do produto</th>
+                                <th>Produto</th>
+                                <th>Tipo</th>
+                                <th>Quantidade</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-movements-body">
+                            <tr><td colspan="5" class="empty-state">Carregando dados...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main> 
+
+   <!--Footer-->
+<footer class="app-footer">
+    <div>
+        <strong>Mina  Nawena Decor</strong>
+        <span>| Plataforma de Gestão Interna</span>
+    </div>
+
+    <div>
+        Desenvolvido por <strong>Albino Mareleco</strong>
+    </div>
+
+    <div>
+        © 2026 — Todos os direitos reservados
+    </div>
+</footer>
+
+
+
+
+
+    <script src="../cores/config.js"></script>
+    <script src="../js/dashboard.js"></script>
+     <script src="../cores/auth.js"></script>
+
+</body>
+</html>

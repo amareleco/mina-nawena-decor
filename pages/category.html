@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Gestão de Categorias</title>
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR (Mantida exatamente como no seu código) -->
+    <header>
+        <nav>
+            <a href="#" class="brand-container">
+                <div class="logo-box">
+                    <img src="../assets/asset-3-logo.png" alt="Mina Decor Logo" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/diamond.png';">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            
+            <div class="user-nav">
+                <ul class="nav-links">
+                     <li><a href="dashboard.html">Painel Principal</a></li>
+                    <li><a href="product.html">Produtos</a></li>
+                    <li><a href="category.html" class="active">Categorias</a></li>
+                    <!-- <li><a href="supplier.html">Fornecedores</a></li>
+                    <li><a href="event.html">Eventos</a></li>
+                      <li><a href="event_item.html">Itens do Evento</a></li> -->
+                       <li><a href="movement.html">Movimento</a></li>
+                    <li><a href="user.html">Gestores</a></li>
+                    <!-- <li><a href="client.html">Clientes</a></li> -->
+                    <li><a href="repport.html">Relatórios</a></li>
+                </ul>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENT -->
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Gestão de Categorias</h1>
+                <p>Cadastre, visualize, edite e gira o catálogo de categorias dos artigos decorativos.</p>
+            </div>
+            <button class="btn-gold" id="openCreateCategoryBtn">
+                + Nova Categoria
+            </button>
+        </div>
+
+        <!-- FILTRO -->
+        <div class="filter-bar">
+            <input type="text" id="categorySearch" class="search-input" placeholder="Pesquisar por código, nome ou descrição...">
+        </div>
+
+        <!-- TABELA -->
+        <div class="panel-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Data de Criação</th>
+                        <th style="text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="categories-table-body">
+                    <tr>
+                        <td>CAT-001</td>
+                        <td><strong>Vasos</strong></td>
+                        <td>Vasos decorativos de cerâmica, vidro e metal.</td>
+                        <td>2026-08-07</td>
+                        <td class="actions text-center">     
+                            <button class="btn-action edit editCategoryButtons" title="Editar Categoria"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete" title="Apagar Categoria"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CAT-002</td>
+                        <td><strong>Iluminação</strong></td>
+                        <td>Lustres, luminárias de mesa e arandelas decorativas.</td>
+                        <td>2026-08-07</td>
+                        <td class="actions text-center">     
+                            <button class="btn-action edit editCategoryButtons" title="Editar Categoria"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete" title="Apagar Categoria"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL DE CADASTRO / EDIÇÃO -->
+    <div class="modal-overlay" id="createCategoryModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-form-title" class="categoryModalTitle">Cadastrar Categoria</h2>
+                <button class="close-btn" id="closeCreateCategoryBtn">&times;</button>
+            </div>
+            <form id="createCategoryForm">
+                <div class="modal-body">
+                    <input type="hidden" id="cat-id">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="categoryCode">Código da Categoria *</label>
+                            <input type="text" id="categoryCode" class="form-control" placeholder="Ex: CAT-001" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="categoryName">Nome da Categoria *</label>
+                            <input type="text" id="categoryName" class="form-control" placeholder="Ex: Mobiliário Escolar" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="categoryDescription">Descrição</label>
+                            <textarea id="categoryDescription" class="form-control" rows="3" placeholder="Descrição detalhada do grupo de produtos..."></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id = "cancelCreateCategoryBtn">Cancelar</button>
+                    <button type="submit" class="btn-gold" id = "addCategoryBtn">Salvar Categoria</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO -->
+    <div class="modal-overlay" id="">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Detalhes da Categoria</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="view-modal-content">
+                <!-- Conteúdo preenchido dinamicamente via JS -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+<!--Footer-->
+<footer class="app-footer">
+    <div>
+        <strong>Mina  Nawena Decor</strong>
+        <span>| Plataforma de Gestão Interna</span>
+    </div>
+
+    <div>
+        Desenvolvido por <strong>Albino Mareleco</strong>
+    </div>
+
+    <div>
+        © 2026 — Todos os direitos reservados
+    </div>
+</footer>
+
+
+    <script src="../cores/auth.js"></script>
+<script>
+    requireAuth();
+</script>
+<script src="../cores/config.js"></script>
+    <script src="../js/category.js"></script>
+
+</body>
+</html>

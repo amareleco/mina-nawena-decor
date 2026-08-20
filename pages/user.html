@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mina Decor - Gestão de Utilizadores</title>
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+   <header>
+        <nav>
+            <a href="#" class="brand-container">
+                <div class="logo-box">
+                    <img src="../assets/asset-3-logo.png" alt="Mina Decor Logo" onerror="this.onerror=null; this.src='https://img.icons8.com/color/96/diamond.png';">
+                </div>
+                <div class="brand-name">Mina Nawena <span>Decor</span></div>
+            </a>
+            
+            <div class="user-nav">
+                <ul class="nav-links">
+                     <li><a href="dashboard.html">Painel Principal</a></li>
+                    <li><a href="product.html">Produtos</a></li>
+                    <li><a href="category.html">Categorias</a></li>
+                    <!-- <li><a href="supplier.html">Fornecedores</a></li>
+                    <li><a href="event.html">Eventos</a></li>
+                      <li><a href="event_item.html">Itens do Evento</a></li> -->
+                       <li><a href="movement.html">Movimento</a></li>
+                    <li><a href="user.html" class="active">Gestores</a></li>
+                    <!-- <li><a href="client.html">Clientes</a></li> -->
+                    <li><a href="repport.html">Relatórios</a></li>
+                </ul>
+                <button class="btn-logout" onclick="logout()">Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENT -->
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Gestão de Utilizadores</h1>
+                <p>Gerencie o acesso, perfis e permissões dos utilizadores do sistema.</p>
+            </div>
+            <button class="btn-gold" id="addUserBtn">
+                + Novo Utilizador
+            </button>
+        </div>
+
+        <!-- FILTRO -->
+        <div class="filter-bar">
+            <input type="text" id="userSearchInput" class="user-row search-input"  autocomplete="off" placeholder="Pesquisar por código, nome, e-mail ou perfil...">
+        </div>
+
+        <!-- TABELA -->
+        <div class="panel-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Perfil</th>
+                        <th>Estado</th>
+                        <th>Data de Criação</th>
+                        <th style="text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    <tr>
+                        <tr>
+                        <td class="actions text-center">
+                            <span class="permission-message">
+                                <i class="fas fa-lock"></i>
+                                Sem permissão para gerir ou ver esta informacao
+                            </span>
+                        </td>
+                        <td class="actions text-center">     
+                            <button class="btn-action edit edit-user-btn" title="Editar Utilizador" data-code="${user.code}"><i class="fas fa-pen"></i></button>
+                            <button class="btn-action delete  delete-user-btn" title="Apagar Utilizador" data-code="${user.code}"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- MODAL DE CADASTRO / EDIÇÃO -->
+    <div class="modal-overlay" id="createUserModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-form-title" class="userModalTitle">Cadastrar Utilizador</h2>
+                <button class="close-btn" id="closeCreateUserBtn">&times;</button>
+            </div>
+            <form id="createUserForm">
+                <div class="modal-body">
+                    <input type="hidden" id="user-id">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="userCode">Código do Utilizador *</label>
+                            <input type="text" id="userCode" class="form-control" placeholder="USR-001" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="userRole">Perfil*</label>
+                            <select id="userRole" class="form-control" required>
+                                <option value="">Selecione o perfil...</option>
+                                <option value="admin">Administrador</option>
+                                <option value="manager">Gestor</option>
+                                <option value="employee">Empregado</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="userName">Nome Completo *</label>
+                            <input ttype="text"
+                            id="userName" class="form-control" placeholder="Joel Mate" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="userEmail">E-mail *</label>
+                            <input
+                            type="email"
+                            id="userEmail" class="form-control" placeholder="joelmate@example.com" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="userPassword">Senha *</label>
+                            <input type="password" id="userPassword" class="form-control" placeholder="********" required>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label>Estado da conta</label>
+                            <select id="userActive" name="user-active">
+                               <option value="true">Ativo</option>
+                                <option value="false">Inativo</option>
+                            </select> 
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancelCreateUserBtn">Cancelar</button>
+                    <button type="submit" class="btn-gold addUserEditBtn" id="createUserForm">Salvar Utilizador</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!--Footer-->
+<footer class="app-footer">
+    <div>
+        <strong>Mina  Nawena Decor</strong>
+        <span>| Plataforma de Gestão Interna</span>
+    </div>
+
+    <div>
+        Desenvolvido por <strong>Albino Mareleco</strong>
+    </div>
+
+    <div>
+        © 2026 — Todos os direitos reservados
+    </div>
+</footer>
+
+
+
+
+<script src="../cores/auth.js"></script>
+<script>
+    requireAuth();
+</script>
+ <script src="../cores/config.js"></script>
+<script src="../js/user.js"></script>
+
+</body>
+</html>
