@@ -19,25 +19,8 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    # Converter valores existentes para minúsculas
-    op.execute("UPDATE users SET role = LOWER(role)")
-    
-    # Criar o tipo ENUM (se não existir)
-    op.execute("DROP TYPE IF EXISTS userrole CASCADE")
-    op.execute("CREATE TYPE userrole AS ENUM ('admin', 'manager', 'employee')")
-    
-    # Converter a coluna
-    op.alter_column('users', 'role',
-        existing_type=sa.VARCHAR(length=50),
-        type_=sa.Enum('admin', 'manager', 'employee', name='userrole', native_enum=True),
-        existing_nullable=False,
-        postgresql_using='role::userrole')
+    pass
 
 
 def downgrade() -> None:
-    op.alter_column('users', 'role',
-        existing_type=sa.Enum('admin', 'manager', 'employee', name='userrole', native_enum=True),
-        type_=sa.VARCHAR(length=50),
-        existing_nullable=False)
-    
-    op.execute("DROP TYPE IF EXISTS userrole CASCADE")
+    pass

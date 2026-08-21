@@ -15,7 +15,6 @@ from sqlalchemy.orm import (
 from app.database.base import Base
 
 
-
 class Event(Base):
 
     __tablename__ = "events"
