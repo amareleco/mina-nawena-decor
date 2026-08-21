@@ -770,76 +770,48 @@
     }
 }
 
+/* =========================================
+   TABELA RESPONSIVA
+   ========================================= */
+
+.panel-card {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    white-space: nowrap;
+}
+
+
+/* CELULAR */
 @media (max-width: 768px) {
 
-    .data-table,
-    .data-table tbody,
-    .data-table tr,
-    .data-table td {
-        display: block;
+    .panel-card {
         width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
     }
 
-    /* Esconde o cabeçalho tradicional */
-    .data-table thead {
-        display: none;
+    .data-table {
+        width: 1000px;
+        min-width: 1000px;
     }
 
-    /* Cada produto vira um cartão */
-    .data-table tbody tr {
-        display: block;
-        background: var(--white);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius);
-        margin-bottom: 1rem;
-        padding: 0.75rem 1rem;
-        box-shadow: var(--shadow);
-    }
-
-    /* Cada informação */
+    .data-table th,
     .data-table td {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 1rem;
-
-        padding: 0.7rem 0;
-
-        border-bottom: 1px solid var(--border-color);
-
-        text-align: right;
-        white-space: normal;
-        word-break: break-word;
-    }
-
-    .data-table td:last-child {
-        border-bottom: none;
-    }
-
-    /* Nome da coluna */
-    .data-table td::before {
-        content: attr(data-label);
-
-        font-weight: 700;
-        color: var(--primary-cobalt);
-
-        text-align: left;
-
-        flex-shrink: 0;
-        min-width: 105px;
-    }
-
-    /* Ações */
-    .data-table td[data-label="Ações"] {
-        justify-content: flex-end;
-        gap: 0.5rem;
-    }
-
-    .data-table td[data-label="Ações"]::before {
-        margin-right: auto;
-    }
-
-    .data-table .actions {
-        display: flex;
+        white-space: nowrap;
+        padding: 9px 12px;
+        font-size: 0.82rem;
     }
 }

@@ -85,39 +85,39 @@ function renderProducts(products) {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td data-label="Código">${product.code ?? ""}</td>
+            <td >${product.code ?? ""}</td>
 
-            <td data-label="Nome">
+            <td>
                 <strong>
                     ${product.name ?? ""}
                 </strong>
             </td>
 
-            <td data-label="Categoria">
+            <td>
                 ${product.category.name ?? ""}
             </td>
 
-            <td data-label="Descricao">
+            <td>
                 ${product.description ?? ""}
             </td>
 
-            <td data-label="Quantidade">
+            <td>
                 ${product.quantity ?? 0}
             </td>
 
-            <td data-label="Minimo">
+            <td>
                 ${product.minimum_stock ?? 0}
             </td>
 
-            <td data-label="Estado">
+            <td>
                 ${product.is_active? "Disponível" : "Indisponível"}
             </td>
 
-            <td data-label="Dada" >
+            <td>
                 ${product.created_at ?? ""}
             </td>
 
-            <td  data-label="Ações" class="actions text-center">
+            <td class="actions text-center">
 
                 <button
                     type="button"
