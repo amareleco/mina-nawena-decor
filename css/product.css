@@ -774,6 +774,10 @@
    TABELA RESPONSIVA
    ========================================= */
 
+/* =========================================
+   TABELA RESPONSIVA
+   ========================================= */
+
 .panel-card {
     width: 100%;
     overflow-x: auto;
@@ -814,4 +818,11 @@
         padding: 9px 12px;
         font-size: 0.82rem;
     }
+
+    .data-table th,
+    .data-table td {
+        padding: 10px 12px;
+        white-space: nowrap;
+}
+
 }
