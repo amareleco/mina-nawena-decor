@@ -31,7 +31,10 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+                }
 
         /* HEADER / NAVBAR */
         header {
@@ -131,12 +134,10 @@
         }
 
         /* MAIN CONTENT */
-        main {
-            flex: 1;
-            max-width: 1300px;
+         main {
             width: 100%;
-            margin: 0 auto;
-            padding: 2rem;
+            max-width: 1300px;
+            box-sizing: border-box;
         }
 
         .page-header {
@@ -782,22 +783,29 @@
 .panel-card {
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    background-color: var(--white);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     border: 1px solid var(--border-color);
+    overflow: hidden; /* Garante que o indicador de borda não vaze */
 }
 
-/* A tabela se adapta ou força scroll se for maior que a tela */
+/* Novo wrapper com scroll horizontal isolado */
+.table-responsive {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .data-table {
     width: 100%;
-    min-width: 650px; /* Altere para o mínimo necessário sem exagerar */
+    min-width: 750px; /* Garante espaço mínimo sem espremer as 9 colunas */
     border-collapse: collapse;
+    text-align: left;
 }
 
 .data-table th,
 .data-table td {
-    white-space: nowrap; /* Evita que o texto quebre linhas estranhamente */
+    white-space: nowrap; /* Previne quebras brutas de linha no texto das colunas */
 }
-/* CELULAR */
