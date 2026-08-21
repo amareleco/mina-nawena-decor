@@ -37,7 +37,7 @@ async def global_exception_handler(request, exc):
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://amareleco.github.io/mina-nawena-decor/",
+        "https://amareleco.github.io",
     ],
     allow_credentials=True,
     allow_methods=["*"],
