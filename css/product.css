@@ -770,64 +770,48 @@
     }
 }
 
-/* ================================
-   TABELAS RESPONSIVAS
-   ================================ */
-
-.table-responsive {
-    width: 100%;
+.panel-body {
+    padding: 1rem;
     overflow-x: auto;
-    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
 }
 
-/* Mantém as colunas legíveis */
-.data-table th,
+.data-table th {
+    background-color: var(--cobalt-light);
+    color: var(--primary-cobalt);
+    font-weight: 700;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--primary-cobalt);
+}
+
 .data-table td {
-    white-space: nowrap;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-dark);
 }
 
-/* Celular */
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
 @media (max-width: 768px) {
-
-    .panel-card {
-        width: 100%;
-        max-width: 100%;
-        overflow: hidden;
-    }
-
-    .table-responsive {
-        width: 100%;
-        max-width: 100%;
+    .panel-body {
         overflow-x: auto;
+        padding: 0.75rem;
     }
-
-    .data-table {
-        min-width: 850px;
-    }
-
-    .data-table th,
-    .data-table td {
-        padding: 9px 10px;
-        font-size: 0.82rem;
-    }
-}
-
-/* Celulares pequenos */
-@media (max-width: 480px) {
 
     .data-table {
         min-width: 800px;
-    }
-
-    .data-table th,
-    .data-table td {
-        padding: 8px 9px;
-        font-size: 0.78rem;
     }
 }
