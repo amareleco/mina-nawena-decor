@@ -769,3 +769,65 @@
         height: 36px;
     }
 }
+
+/* ================================
+   TABELAS RESPONSIVAS
+   ================================ */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Mantém as colunas legíveis */
+.data-table th,
+.data-table td {
+    white-space: nowrap;
+}
+
+/* Celular */
+@media (max-width: 768px) {
+
+    .panel-card {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .data-table {
+        min-width: 850px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 9px 10px;
+        font-size: 0.82rem;
+    }
+}
+
+/* Celulares pequenos */
+@media (max-width: 480px) {
+
+    .data-table {
+        min-width: 800px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 8px 9px;
+        font-size: 0.78rem;
+    }
+}
