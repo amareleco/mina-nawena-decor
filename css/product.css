@@ -774,3 +774,30 @@
     }
 }
 
+/* =========================================
+   TABELA RESPONSIVA
+   ========================================= */
+
+/* Container que isola o scroll horizontal */
+.panel-card {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+/* A tabela se adapta ou força scroll se for maior que a tela */
+.data-table {
+    width: 100%;
+    min-width: 650px; /* Altere para o mínimo necessário sem exagerar */
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    white-space: nowrap; /* Evita que o texto quebre linhas estranhamente */
+}
+/* CELULAR */
