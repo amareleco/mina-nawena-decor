@@ -211,17 +211,9 @@ As tabelas, formulários, menus, modais e componentes principais possuem regras 
 ## 🔮 Próximas funcionalidades
 
 O projeto pode evoluir para uma solução comercial de gestão de stock, incluindo:
-
-* 📷 Leitura de códigos de barras através da câmera do telemóvel
-* 🛒 Módulo de vendas
 * 👥 Gestão de clientes
 * 🚚 Gestão de fornecedores
-* 📈 Relatórios avançados
-* 👨‍💼 Gestão de funcionários
-* 🏪 Gestão de múltiplas lojas
-* 💳 Assinaturas e planos
-* 💰 Integração com M-Pesa e e-Mola
-* 🤖 Funcionalidades baseadas em Inteligência Artificial
+* 🎪 Gestão de eventos
 
 ## 🎯 Objetivo
 
